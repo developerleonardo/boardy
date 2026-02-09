@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(135deg, #25252555 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(225deg, #252525 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(315deg, #25252555 25%, transparent 25%) 0px 0/20px 20px,
+    linear-gradient(45deg, #252525 25%, #0f0f0f 25%) 0px 0/20px 20px;
+  opacity: 0.1;
+  z-index: -1;
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--grey-100);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-horizontal {
+  height: 8px;
+}
+
+/* .list > ::-webkit-scrollbar-thumb {
+  background-color: var(--grey-200);
+  border-radius: 4px;
+} */
