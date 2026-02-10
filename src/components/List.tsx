@@ -20,7 +20,7 @@ export const List = ({ title, children }: listProps) => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="lucide lucide-trash-icon lucide-trash"
+          className="lucide lucide-trash-icon lucide-trash cursor-pointer"
         >
           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
           <path d="M3 6h18" />
@@ -36,7 +36,7 @@ export const List = ({ title, children }: listProps) => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="lucide lucide-grip-vertical-icon lucide-grip-vertical"
+          className="lucide lucide-grip-vertical-icon lucide-grip-vertical cursor-grab"
         >
           <circle cx="9" cy="12" r="1" />
           <circle cx="9" cy="5" r="1" />
