@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
+
 type listProps = {
+  title?: string;
   children?: React.ReactNode;
 };
 
-export const List = ({ children }: listProps) => {
+export const List = ({ title, children }: listProps) => {
   return (
-    <div className="bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center justify-center">
+    <div className="bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit">
       <div className="flex justify-between items-center w-full">
-        <input type="text" className="grow mr-2" />
+        <input type="text" className="grow mr-2" value={title} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
