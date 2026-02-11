@@ -12,6 +12,8 @@ import {
 import { cardTemplates } from "@/mocks/cardTemplates.mock";
 import { type cardTypes } from "@/types";
 import "./App.css";
+import { Button } from "./components/ui/button";
+import { CirclePlus } from "lucide-react";
 
 function App() {
   const [cards, setCards] = useState<cardTypes[]>(cardTemplates);
@@ -64,6 +66,10 @@ function App() {
                   );
                 })}
               </List>
+              <Button variant="secondary" className="w-76">
+                <CirclePlus className="mr-1" />
+                Add a new list
+              </Button>
             </div>
           </SidebarInset>
         </SidebarProvider>

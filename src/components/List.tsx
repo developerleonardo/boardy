@@ -15,9 +15,9 @@ export const List = ({ title, children }: listProps) => {
         <GripVertical className="cursor-grab w-5 h-5" />
       </div>
       <div className="flex flex-col gap-2">{children}</div>
-      <Button variant="secondary" className="w-full">
+      <Button variant="secondary" className="w-full hover:bg-neutral-900/50">
         <CirclePlus className="mr-1" />
-        Add card
+        Add a new card
       </Button>
     </div>
   );
