@@ -1,3 +1,15 @@
+export interface userTypes {
+  userId: string;
+  name: string;
+  email: string;
+}
+
+export interface boardTypes {
+  boardId: string;
+  userId: string;
+  title: string;
+}
+
 export interface cardTypes {
   cardId: number;
   title: string;
