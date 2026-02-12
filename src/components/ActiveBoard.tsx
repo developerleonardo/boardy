@@ -8,49 +8,42 @@ type ActiveBoardProps = {};
 
 export const ActiveBoard = ({}: ActiveBoardProps) => {
   const cards = useBoundStore((state) => state.cards);
+  const lists = useBoundStore((state) => state.lists);
+  const addList = useBoundStore((state) => state.addList);
+
+  const boardId = "board-1";
+  const filteredLists = lists.filter((list) => list.boardId === boardId);
 
   return (
     <div className="w-full h-[calc(100vh-4rem)] flex gap-8 pt-12 px-4 overflow-x-auto">
-      <List>
-        {cards.map((cardTemplate) => {
-          return (
-            <Card
-              key={cardTemplate.cardId}
-              cardId={cardTemplate.cardId}
-              title={cardTemplate.title}
-              description={cardTemplate.description}
-              priority={cardTemplate.priority || "low"}
-            />
-          );
-        })}
-      </List>
-      <List>
-        {cards.map((cardTemplate) => {
-          return (
-            <Card
-              key={cardTemplate.cardId}
-              cardId={cardTemplate.cardId}
-              title={cardTemplate.title}
-              description={cardTemplate.description}
-              priority={cardTemplate.priority || "low"}
-            />
-          );
-        })}
-      </List>
-      <List>
-        {cards.map((cardTemplate) => {
-          return (
-            <Card
-              key={cardTemplate.cardId}
-              cardId={cardTemplate.cardId}
-              title={cardTemplate.title}
-              description={cardTemplate.description}
-              priority={cardTemplate.priority || "low"}
-            />
-          );
-        })}
-      </List>
-      <Button variant="secondary" className="w-76">
+      {filteredLists.map((list) => {
+        return (
+          <List key={list.listId} boardId={list.boardId} title={list.title}>
+            {cards
+              .filter((card) => card.listId === list.listId)
+              .map((cardTemplate) => {
+                return (
+                  <Card
+                    key={cardTemplate.cardId}
+                    listId={cardTemplate.listId}
+                    cardId={cardTemplate.cardId}
+                    title={cardTemplate.title}
+                    description={cardTemplate.description}
+                    priority={cardTemplate.priority || "low"}
+                  />
+                );
+              })}
+          </List>
+        );
+      })}
+
+      <Button
+        variant="secondary"
+        className="w-76"
+        onClick={() =>
+          addList({ boardId, listId: `list-${Date.now()}`, title: "New List" })
+        }
+      >
         <CirclePlus className="mr-1" />
         Add a new list
       </Button>

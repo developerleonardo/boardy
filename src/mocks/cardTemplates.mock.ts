@@ -1,7 +1,8 @@
 import type { cardTypes } from "@/types";
 
-export const cardTemplates: cardTypes[] = [
+export const cardMocks: cardTypes[] = [
   {
+    listId: "list-1",
     cardId: 1,
     title: "Card's Title",
     description:
@@ -9,6 +10,7 @@ export const cardTemplates: cardTypes[] = [
     priority: "low",
   },
   {
+    listId: "list-1",
     cardId: 2,
     title: "Card's Title",
     description:
@@ -16,6 +18,7 @@ export const cardTemplates: cardTypes[] = [
     priority: "medium",
   },
   {
+    listId: "list-1",
     cardId: 3,
     title: "Card's Title",
     description:

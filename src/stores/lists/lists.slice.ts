@@ -7,6 +7,17 @@ interface ListsSlice {
 }
 
 export const createListsSlice: StateCreator<ListsSlice> = (set) => ({
-  lists: [],
+  lists: [
+    {
+      boardId: "board-1",
+      listId: "list-1",
+      title: "To Do",
+    },
+    {
+      boardId: "board-1",
+      listId: "list-2",
+      title: "In Progress",
+    },
+  ],
   addList: (list) => set((state) => ({ lists: [...state.lists, list] })),
 });

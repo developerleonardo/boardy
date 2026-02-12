@@ -11,6 +11,7 @@ export interface boardTypes {
 }
 
 export interface cardTypes {
+  listId: string;
   cardId: number;
   title: string;
   description: string;
@@ -20,7 +21,7 @@ export interface cardTypes {
 export type priorityType = "low" | "medium" | "high";
 
 export interface listTypes {
-  listId: number;
+  boardId: string;
+  listId: string;
   title: string;
-  cards: cardTypes[];
 }

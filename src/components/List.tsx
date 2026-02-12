@@ -2,11 +2,12 @@ import { Button } from "@/components/ui/button";
 import { CirclePlus, GripVertical, Trash } from "lucide-react";
 
 type listProps = {
-  title?: string;
+  boardId: string;
+  title: string;
   children?: React.ReactNode;
 };
 
-export const List = ({ title, children }: listProps) => {
+export const List = ({ title = "New List", children }: listProps) => {
   return (
     <div className="bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit">
       <div className="flex justify-between items-center w-full">
