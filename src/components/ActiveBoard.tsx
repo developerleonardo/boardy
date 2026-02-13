@@ -18,18 +18,23 @@ export const ActiveBoard = ({}: ActiveBoardProps) => {
     <div className="w-full h-[calc(100vh-4rem)] flex gap-8 pt-12 px-4 overflow-x-auto">
       {filteredLists.map((list) => {
         return (
-          <List key={list.listId} boardId={list.boardId} title={list.title}>
+          <List
+            key={list.listId}
+            listId={list.listId}
+            boardId={list.boardId}
+            title={list.title}
+          >
             {cards
               .filter((card) => card.listId === list.listId)
-              .map((cardTemplate) => {
+              .map((cardFiltered) => {
                 return (
                   <Card
-                    key={cardTemplate.cardId}
-                    listId={cardTemplate.listId}
-                    cardId={cardTemplate.cardId}
-                    title={cardTemplate.title}
-                    description={cardTemplate.description}
-                    priority={cardTemplate.priority || "low"}
+                    key={cardFiltered.cardId}
+                    listId={cardFiltered.listId}
+                    cardId={cardFiltered.cardId}
+                    title={cardFiltered.title}
+                    description={cardFiltered.description}
+                    priority={cardFiltered.priority || "low"}
                   />
                 );
               })}
@@ -40,9 +45,7 @@ export const ActiveBoard = ({}: ActiveBoardProps) => {
       <Button
         variant="secondary"
         className="w-76"
-        onClick={() =>
-          addList({ boardId, listId: `list-${Date.now()}`, title: "New List" })
-        }
+        onClick={() => addList(boardId)}
       >
         <CirclePlus className="mr-1" />
         Add a new list

@@ -1,18 +1,24 @@
 import { Button } from "@/components/ui/button";
+import { useBoundStore } from "@/stores";
 import { CirclePlus, GripVertical, Trash } from "lucide-react";
 
 type listProps = {
   boardId: string;
+  listId: string;
   title: string;
   children?: React.ReactNode;
 };
 
-export const List = ({ title = "New List", children }: listProps) => {
+export const List = ({ listId, title = "New List", children }: listProps) => {
+  const deleteList = useBoundStore((state) => state.deleteList);
   return (
     <div className="bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit">
       <div className="flex justify-between items-center w-full">
         <input type="text" className="grow mr-2" value={title} />
-        <Trash className="cursor-pointer w-5 h-5" />
+        <Trash
+          className="cursor-pointer w-5 h-5"
+          onClick={() => deleteList(listId)}
+        />
         <GripVertical className="cursor-grab w-5 h-5" />
       </div>
       <div className="flex flex-col gap-2">{children}</div>

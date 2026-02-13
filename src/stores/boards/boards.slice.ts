@@ -1,7 +1,7 @@
 import { type boardTypes } from "@/types/index";
 import type { StateCreator } from "zustand";
 
-interface BoardsSlice {
+export interface BoardsSlice {
   boards: boardTypes[];
   addBoard: (board: boardTypes) => void;
 }

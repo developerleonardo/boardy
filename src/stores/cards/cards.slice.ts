@@ -1,7 +1,7 @@
 import { type cardTypes } from "@/types/index";
 import type { StateCreator } from "zustand";
 
-interface CardsSlice {
+export interface CardsSlice {
   cards: cardTypes[];
   addCard: (card: cardTypes) => void;
 }
