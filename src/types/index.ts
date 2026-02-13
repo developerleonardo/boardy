@@ -12,7 +12,7 @@ export interface boardTypes {
 
 export interface cardTypes {
   listId: string;
-  cardId: number;
+  cardId: string;
   title: string;
   description: string;
   priority?: priorityType;

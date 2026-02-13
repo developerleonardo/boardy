@@ -1,6 +1,7 @@
 import type { listTypes } from "@/types";
 import type { StateCreator } from "zustand";
 import type { BoundState } from "../bound/bound.store";
+import { v4 as uuid } from "uuid";
 
 export interface ListsSlice {
   lists: listTypes[];
@@ -18,7 +19,7 @@ export const createListsSlice: StateCreator<BoundState, [], [], ListsSlice> = (
         ...state.lists,
         {
           boardId: boardId,
-          listId: `list-${state.lists.length + 1}`,
+          listId: uuid(),
           title: "New list",
         },
       ],

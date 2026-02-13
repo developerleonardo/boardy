@@ -11,6 +11,7 @@ type listProps = {
 
 export const List = ({ listId, title = "New List", children }: listProps) => {
   const deleteList = useBoundStore((state) => state.deleteList);
+  const addCard = useBoundStore((state) => state.addCard);
   return (
     <div className="bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit">
       <div className="flex justify-between items-center w-full">
@@ -22,7 +23,11 @@ export const List = ({ listId, title = "New List", children }: listProps) => {
         <GripVertical className="cursor-grab w-5 h-5" />
       </div>
       <div className="flex flex-col gap-2">{children}</div>
-      <Button variant="secondary" className="w-full hover:bg-neutral-900/50">
+      <Button
+        variant="secondary"
+        className="w-full hover:bg-neutral-900/50"
+        onClick={() => addCard(listId)}
+      >
         <CirclePlus className="mr-1" />
         Add a new card
       </Button>

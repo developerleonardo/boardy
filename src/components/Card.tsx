@@ -1,3 +1,4 @@
+import { useBoundStore } from "@/stores";
 import { Badge } from "./ui/badge";
 import { type cardTypes } from "@/types";
 
@@ -12,6 +13,7 @@ export const Card: React.FC<cardProps> = ({
   if (priority === "low" || priority === "medium" || priority === "high") {
     badgeVariant = priority;
   }
+
   return (
     <div className="bg-neutral-700 h-44 rounded-lg px-6 py-4 w-full max-w-70 grid grid-rows-[1fr_2fr_22px] hover:bg-neutral-600 cursor-pointer">
       <h1 className="text-2xl font-bold">{title}</h1>
