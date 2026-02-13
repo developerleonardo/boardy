@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sidebar";
 import "./App.css";
 import { ActiveBoard } from "./components/ActiveBoard";
+import { EditCardDialog } from "./components/EditCardDialog";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <ActiveBoard />
           </SidebarInset>
         </SidebarProvider>
+        <EditCardDialog />
       </Layout>
     </>
   );
