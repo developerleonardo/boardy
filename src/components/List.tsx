@@ -10,12 +10,18 @@ type listProps = {
 };
 
 export const List = ({ listId, title = "New List", children }: listProps) => {
+  const updateListTitle = useBoundStore((state) => state.updateListTitle);
   const deleteList = useBoundStore((state) => state.deleteList);
   const addCard = useBoundStore((state) => state.addCard);
   return (
     <div className="bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit">
       <div className="flex justify-between items-center w-full">
-        <input type="text" className="grow mr-2" value={title} />
+        <input
+          type="text"
+          className="grow mr-2"
+          value={title}
+          onChange={(e) => updateListTitle(listId, e.target.value)}
+        />
         <Trash
           className="cursor-pointer w-5 h-5"
           onClick={() => deleteList(listId)}

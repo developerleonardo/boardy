@@ -7,6 +7,7 @@ export interface ListsSlice {
   lists: listTypes[];
   addList: (boardId: string) => void;
   deleteList: (listId: string) => void;
+  updateListTitle: (listId: string, title: string) => void;
 }
 
 export const createListsSlice: StateCreator<BoundState, [], [], ListsSlice> = (
@@ -28,5 +29,11 @@ export const createListsSlice: StateCreator<BoundState, [], [], ListsSlice> = (
     set((state) => ({
       lists: state.lists.filter((list) => list.listId !== listId),
       cards: state.cards.filter((card) => card.listId !== listId),
+    })),
+  updateListTitle: (listId, title) =>
+    set((state) => ({
+      lists: state.lists.map((list) =>
+        list.listId === listId ? { ...list, title } : list,
+      ),
     })),
 });

@@ -7,10 +7,13 @@ export interface CardsSlice {
   addCard: (listId: string) => void;
   isEditingCard: boolean;
   setIsEditingCard: (isEditing: boolean) => void;
+  activeCardId?: string;
+  setActiveCardId: (cardId: string) => void;
 }
 
 export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
   cards: [],
+  activeCardId: undefined,
   isEditingCard: false,
   setIsEditingCard: (isEditing) => set({ isEditingCard: isEditing }),
   addCard: (listId) =>
@@ -27,4 +30,5 @@ export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
         },
       ],
     })),
+  setActiveCardId: (cardId) => set({ activeCardId: cardId }),
 });

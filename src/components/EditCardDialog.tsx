@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,8 +28,13 @@ import { Trash } from "lucide-react";
 interface EditCardDialogProps {}
 
 export function EditCardDialog({}: EditCardDialogProps) {
+  const { register } = useForm();
+  const cards = useBoundStore((state) => state.cards);
+  const cardId = useBoundStore((state) => state.activeCardId);
   const isEditingCard = useBoundStore((state) => state.isEditingCard);
   const setIsEditingCard = useBoundStore((state) => state.setIsEditingCard);
+  const activeCard = cards.find((card) => card.cardId === cardId);
+  if (!activeCard) return null;
 
   return (
     <Dialog open={isEditingCard} onOpenChange={setIsEditingCard}>
@@ -42,12 +48,21 @@ export function EditCardDialog({}: EditCardDialogProps) {
           </DialogHeader>
           <FieldGroup>
             <Field>
-              <Label htmlFor="name-1">Title</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                defaultValue={activeCard.title || ""}
+                {...register("title")}
+              />
             </Field>
             <Field>
               <Label htmlFor="username-1">Description</Label>
-              <Textarea id="username-1" placeholder="Type your message here." />
+              <Textarea
+                id="username-1"
+                placeholder="Type your message here."
+                defaultValue={activeCard.description || ""}
+                {...register("description")}
+              />
             </Field>
             <Field>
               <Label htmlFor="priority-1">Priority</Label>
