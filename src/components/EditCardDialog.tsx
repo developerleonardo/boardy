@@ -33,6 +33,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
   const cardId = useBoundStore((state) => state.activeCardId);
   const isEditingCard = useBoundStore((state) => state.isEditingCard);
   const setIsEditingCard = useBoundStore((state) => state.setIsEditingCard);
+  const deleteCard = useBoundStore((state) => state.deleteCard);
   const activeCard = cards.find((card) => card.cardId === cardId);
   const {
     register,
@@ -121,7 +122,11 @@ export function EditCardDialog({}: EditCardDialogProps) {
             </Field>
           </FieldGroup>
           <DialogFooter>
-            <Button variant="destructive">
+            <Button
+              variant="destructive"
+              type="button"
+              onClick={() => deleteCard(cardId)}
+            >
               <Trash className="inline w-3 h-3" />
               Delete
             </Button>

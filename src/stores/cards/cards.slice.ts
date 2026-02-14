@@ -6,6 +6,7 @@ export interface CardsSlice {
   cards: cardTypes[];
   setCards: (cardId: string, updatedCard: Partial<cardTypes>) => void;
   addCard: (listId: string) => void;
+  deleteCard: (cardId: string) => void;
   isEditingCard: boolean;
   setIsEditingCard: (isEditing: boolean) => void;
   activeCardId?: string | undefined;
@@ -39,6 +40,10 @@ export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
         }
         return card;
       }),
+    })),
+  deleteCard: (cardId) =>
+    set((state) => ({
+      cards: state.cards.filter((card) => card.cardId !== cardId),
     })),
   setActiveCardId: (cardId) => set({ activeCardId: cardId }),
 });
