@@ -4,11 +4,12 @@ import { v4 as uuid } from "uuid";
 
 export interface CardsSlice {
   cards: cardTypes[];
+  setCards: (cardId: string, updatedCard: Partial<cardTypes>) => void;
   addCard: (listId: string) => void;
   isEditingCard: boolean;
   setIsEditingCard: (isEditing: boolean) => void;
-  activeCardId?: string;
-  setActiveCardId: (cardId: string) => void;
+  activeCardId?: string | undefined;
+  setActiveCardId: (cardId: string | undefined) => void;
 }
 
 export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
@@ -29,6 +30,15 @@ export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
           priority: "low",
         },
       ],
+    })),
+  setCards: (cardId, updatedCard) =>
+    set((state) => ({
+      cards: state.cards.map((card) => {
+        if (card.cardId === cardId) {
+          return { ...card, ...updatedCard };
+        }
+        return card;
+      }),
     })),
   setActiveCardId: (cardId) => set({ activeCardId: cardId }),
 });

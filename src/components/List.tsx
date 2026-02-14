@@ -28,7 +28,7 @@ export const List = ({ listId, title = "New List", children }: listProps) => {
         />
         <GripVertical className="cursor-grab w-5 h-5" />
       </div>
-      <div className="flex flex-col gap-2">{children}</div>
+      <div className="flex flex-col gap-2 w-full">{children}</div>
       <Button
         variant="secondary"
         className="w-full hover:bg-neutral-900/50"
