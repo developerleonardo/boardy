@@ -4,14 +4,17 @@ import { CirclePlus } from "lucide-react";
 import { Card } from "@/components/Card";
 import { List } from "@/components/List";
 
-type ActiveBoardProps = {};
+type ActiveBoardProps = {
+  userId: string;
+  boardId: string;
+  title: string;
+};
 
-export const ActiveBoard = ({}: ActiveBoardProps) => {
+export const ActiveBoard = ({ userId, boardId, title }: ActiveBoardProps) => {
   const cards = useBoundStore((state) => state.cards);
   const lists = useBoundStore((state) => state.lists);
   const addList = useBoundStore((state) => state.addList);
 
-  const boardId = "board-1";
   const filteredLists = lists.filter((list) => list.boardId === boardId);
 
   return (
