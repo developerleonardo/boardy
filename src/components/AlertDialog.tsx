@@ -9,25 +9,23 @@ import {
   AlertDialogMedia,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useBoundStore } from "@/stores";
 import { Trash2Icon } from "lucide-react";
 
 interface AlertDialogDestructiveProps {
   title: string;
   description: string;
   onConfirm?: () => void;
+  isAlertDialogOpen: boolean;
+  setIsAlertDialogOpen: (isOpen: boolean) => void;
 }
 
 export const AlertDialogDestructive = ({
   title,
   description,
   onConfirm,
+  isAlertDialogOpen,
+  setIsAlertDialogOpen,
 }: AlertDialogDestructiveProps) => {
-  const isAlertDialogOpen = useBoundStore((state) => state.isAlertDialogOpen);
-  const setIsAlertDialogOpen = useBoundStore(
-    (state) => state.setIsAlertDialogOpen,
-  );
-
   return (
     <AlertDialog open={isAlertDialogOpen} onOpenChange={setIsAlertDialogOpen}>
       <AlertDialogContent size="sm">

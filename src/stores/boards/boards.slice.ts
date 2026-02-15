@@ -4,13 +4,9 @@ import type { StateCreator } from "zustand";
 export interface BoardsSlice {
   boards: boardTypes[];
   addBoard: (board: boardTypes) => void;
-  isAlertDialogOpen: boolean;
-  setIsAlertDialogOpen: (isOpen: boolean) => void;
 }
 
 export const createBoardsSlice: StateCreator<BoardsSlice> = (set) => ({
   boards: [],
   addBoard: (board) => set((state) => ({ boards: [...state.boards, board] })),
-  isAlertDialogOpen: false,
-  setIsAlertDialogOpen: (isOpen) => set(() => ({ isAlertDialogOpen: isOpen })),
 });

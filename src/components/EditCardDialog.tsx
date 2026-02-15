@@ -25,10 +25,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Trash } from "lucide-react";
 import { AlertDialogDestructive } from "./AlertDialog";
+import { useState } from "react";
 
 interface EditCardDialogProps {}
 
 export function EditCardDialog({}: EditCardDialogProps) {
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState<boolean>(false);
+
   const cards = useBoundStore((state) => state.cards);
   const setCards = useBoundStore((state) => state.setCards);
   const cardId = useBoundStore((state) => state.activeCardId);
@@ -36,9 +39,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
   const setIsEditingCard = useBoundStore((state) => state.setIsEditingCard);
   const deleteCard = useBoundStore((state) => state.deleteCard);
   const activeCard = cards.find((card) => card.cardId === cardId);
-  const setIsAlertDialogOpen = useBoundStore(
-    (state) => state.setIsAlertDialogOpen,
-  );
+
   const {
     register,
     handleSubmit,
@@ -160,6 +161,8 @@ export function EditCardDialog({}: EditCardDialogProps) {
         title="Delete card?"
         description="This will permanently delete this card."
         onConfirm={confirmDeleteCard}
+        isAlertDialogOpen={isAlertDialogOpen}
+        setIsAlertDialogOpen={setIsAlertDialogOpen}
       />
     </>
   );
