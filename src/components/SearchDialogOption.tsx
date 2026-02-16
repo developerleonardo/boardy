@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, SquarePen, Trash } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,12 +7,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  CreditCardIcon,
-  LogOutIcon,
-  SettingsIcon,
-  UserIcon,
-} from "lucide-react";
 
 interface SearchDialogOptionProps {
   title: string;
@@ -36,21 +30,13 @@ export const SearchDialogOption = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>
-            <UserIcon />
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCardIcon />
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <SettingsIcon />
-            Settings
+            <SquarePen />
+            Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive">
-            <LogOutIcon />
-            Log out
+            <Trash />
+            Delete Board
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
