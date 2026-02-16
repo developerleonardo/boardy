@@ -8,6 +8,7 @@ export interface BoardsSlice {
   setActiveBoardId: (boardId: string) => void;
   isSearchDialogOpen: boolean;
   setIsSearchDialogOpen: (isOpen: boolean) => void;
+  deleteBoard: (boardId: string) => void;
 }
 
 export const createBoardsSlice: StateCreator<BoardsSlice> = (set) => ({
@@ -23,4 +24,8 @@ export const createBoardsSlice: StateCreator<BoardsSlice> = (set) => ({
   setActiveBoardId: (boardId) => set({ activeBoardId: boardId }),
   isSearchDialogOpen: false,
   setIsSearchDialogOpen: (isOpen) => set({ isSearchDialogOpen: isOpen }),
+  deleteBoard: (boardId) =>
+    set((state) => ({
+      boards: state.boards.filter((board) => board.boardId !== boardId),
+    })),
 });
