@@ -16,6 +16,9 @@ export const BoardSidebar = () => {
   const boards = useBoundStore((state) => state.boards);
   const addBoard = useBoundStore((state) => state.addBoard);
   const setActiveBoardId = useBoundStore((state) => state.setActiveBoardId);
+  const setIsSearchDialogOpen = useBoundStore(
+    (state) => state.setIsSearchDialogOpen,
+  );
 
   const handleAddBoard = () => {
     const newBoard = {
@@ -50,7 +53,11 @@ export const BoardSidebar = () => {
               <SquarePen className="mr-1" />
               Add Board
             </Button>
-            <Button variant="ghost" className="w-full flex justify-start">
+            <Button
+              variant="ghost"
+              className="w-full flex justify-start"
+              onClick={() => setIsSearchDialogOpen(true)}
+            >
               <Search className="mr-1" />
               Search Board
             </Button>

@@ -10,6 +10,7 @@ import "./App.css";
 import { ActiveBoard } from "./components/ActiveBoard";
 import { EditCardDialog } from "./components/EditCardDialog";
 import { useBoundStore } from "./stores";
+import { SearchDialog } from "./components/SearchDialog";
 
 function App() {
   const boards = useBoundStore((state) => state.boards);
@@ -33,6 +34,7 @@ function App() {
           </SidebarInset>
         </SidebarProvider>
         <EditCardDialog />
+        <SearchDialog />
       </Layout>
     </>
   );
