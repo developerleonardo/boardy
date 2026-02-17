@@ -31,10 +31,6 @@ export const BoardSidebar = () => {
     setActiveBoardId(newBoard.boardId);
   };
 
-  const handleSelectBoard = (boardId: string) => {
-    setActiveBoardId(boardId);
-  };
-
   return (
     <Sidebar side="left">
       <SidebarHeader>

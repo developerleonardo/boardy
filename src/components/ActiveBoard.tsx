@@ -10,7 +10,7 @@ type ActiveBoardProps = {
   title: string;
 };
 
-export const ActiveBoard = ({ userId, boardId, title }: ActiveBoardProps) => {
+export const ActiveBoard = ({ boardId }: ActiveBoardProps) => {
   const cards = useBoundStore((state) => state.cards);
   const lists = useBoundStore((state) => state.lists);
   const addList = useBoundStore((state) => state.addList);
