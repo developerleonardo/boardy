@@ -11,6 +11,7 @@ import {
 import { AlertDialogDestructive } from "@/components/AlertDialog";
 import { useBoundStore } from "@/stores";
 import { useState } from "react";
+import { EditBoardDialog } from "./EditBoardDialog";
 
 interface SearchDialogOptionProps {
   title: string;
@@ -26,6 +27,7 @@ export const SearchDialogOption = ({
     (state) => state.setIsSearchDialogOpen,
   );
   const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
+  const [isEditingBoard, setIsEditingBoard] = useState(false);
 
   const handleOpenDeleteDialog = () => {
     setIsAlertDialogOpen(true);
@@ -39,7 +41,7 @@ export const SearchDialogOption = ({
   };
   return (
     <>
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full dark:hover:bg-accent/50">
         <a href={`/board/${boardId}`} className="flex-1 text-left px-2 py-1">
           {title}
         </a>
@@ -50,7 +52,7 @@ export const SearchDialogOption = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setIsEditingBoard(true)}>
               <SquarePen />
               Edit
             </DropdownMenuItem>
@@ -71,6 +73,11 @@ export const SearchDialogOption = ({
         onConfirm={confirmDeleteBoard}
         isAlertDialogOpen={isAlertDialogOpen}
         setIsAlertDialogOpen={setIsAlertDialogOpen}
+      />
+      <EditBoardDialog
+        boardId={boardId}
+        isEditingBoard={isEditingBoard}
+        setIsEditingBoard={setIsEditingBoard}
       />
     </>
   );

@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import { Search, SquarePen } from "lucide-react";
 import { useBoundStore } from "@/stores";
 import { v4 as uuid } from "uuid";
+import { SearchDialogOption } from "./SearchDialogOption";
 
 export const BoardSidebar = () => {
   const boards = useBoundStore((state) => state.boards);
@@ -67,14 +68,19 @@ export const BoardSidebar = () => {
           <SidebarGroupLabel>Boards</SidebarGroupLabel>
           <SidebarGroupContent>
             {boards.map((board) => (
-              <Button
-                variant="ghost"
-                className="w-full flex justify-start"
+              <SearchDialogOption
                 key={board.boardId}
-                onClick={() => handleSelectBoard(board.boardId)}
-              >
-                {board.title}
-              </Button>
+                title={board.title}
+                boardId={board.boardId}
+              />
+              // <Button
+              //   variant="ghost"
+              //   className="w-full flex justify-start"
+              //   key={board.boardId}
+              //   onClick={() => handleSelectBoard(board.boardId)}
+              // >
+              //   {board.title}
+              // </Button>
             ))}
           </SidebarGroupContent>
         </SidebarGroup>

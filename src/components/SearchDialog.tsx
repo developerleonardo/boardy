@@ -26,41 +26,43 @@ export function SearchDialog({}: SearchDialogProps) {
   );
 
   return (
-    <Dialog open={isSearchDialogOpen} onOpenChange={setIsSearchDialogOpen}>
-      <DialogContent className="sm:max-w-sm">
-        <FieldGroup>
-          <Field className="mt-4 w-full">
-            <InputGroup className="w-full">
-              <InputGroupInput
-                id="name-1"
-                name="name-1"
-                placeholder="Search..."
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <InputGroupAddon>
-                <Search />
-              </InputGroupAddon>
-              <InputGroupAddon align="inline-end">
-                {filteredBoards.length} results
-              </InputGroupAddon>
-            </InputGroup>
-          </Field>
-        </FieldGroup>
-        <div className="flex flex-col">
-          <DialogTitle className="text-sm text-neutral-400">
-            Recent Boards
-          </DialogTitle>
-          <div className="flex flex-col mt-2 h-64 overflow-y-auto">
-            {filteredBoards.map((board) => (
-              <SearchDialogOption
-                key={board.boardId}
-                title={board.title}
-                boardId={board.boardId}
-              />
-            ))}
+    <>
+      <Dialog open={isSearchDialogOpen} onOpenChange={setIsSearchDialogOpen}>
+        <DialogContent className="sm:max-w-sm">
+          <FieldGroup>
+            <Field className="mt-4 w-full">
+              <InputGroup className="w-full">
+                <InputGroupInput
+                  id="name-1"
+                  name="name-1"
+                  placeholder="Search..."
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <InputGroupAddon>
+                  <Search />
+                </InputGroupAddon>
+                <InputGroupAddon align="inline-end">
+                  {filteredBoards.length} results
+                </InputGroupAddon>
+              </InputGroup>
+            </Field>
+          </FieldGroup>
+          <div className="flex flex-col">
+            <DialogTitle className="text-sm text-neutral-400">
+              Recent Boards
+            </DialogTitle>
+            <div className="flex flex-col mt-2 h-64 overflow-y-auto">
+              {filteredBoards.map((board) => (
+                <SearchDialogOption
+                  key={board.boardId}
+                  title={board.title}
+                  boardId={board.boardId}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
