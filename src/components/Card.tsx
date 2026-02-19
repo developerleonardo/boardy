@@ -2,7 +2,10 @@ import { Badge } from "./ui/badge";
 import { type cardTypes } from "@/types";
 import { useBoundStore } from "@/stores";
 import { useEffect, useRef, useState } from "react";
-import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import {
+  draggable,
+  dropTargetForElements,
+} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
 type cardProps = cardTypes;
 
@@ -12,6 +15,7 @@ export const Card: React.FC<cardProps> = ({
   priority,
   listId,
   cardId,
+  order,
 }: cardProps) => {
   const setActiveCardId = useBoundStore((state) => state.setActiveCardId);
   let badgeVariant;
@@ -37,11 +41,27 @@ export const Card: React.FC<cardProps> = ({
         type: "card",
         cardId,
         listId,
+        order,
       }),
       onDragStart: () => setDragging(true),
       onDrop: () => setDragging(false),
     });
   }, [cardId, listId]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    return dropTargetForElements({
+      element: el,
+      getData: () => ({
+        type: "card",
+        cardId,
+        listId,
+        order,
+      }),
+    });
+  }, [cardId, listId, order]);
 
   return (
     <div

@@ -6,6 +6,8 @@ import { List } from "@/components/List";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import { getReorderDestinationIndex } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index";
 
 export const Route = createFileRoute("/board/$boardId")({
   loader: ({ params }) => params.boardId,
@@ -16,7 +18,9 @@ function Board() {
   const cards = useBoundStore((state) => state.cards);
   const lists = useBoundStore((state) => state.lists);
   const addList = useBoundStore((state) => state.addList);
-  const moveCard = useBoundStore((state) => state.moveCard);
+  const reorderWithinList = useBoundStore((state) => state.reorderWithinList);
+  const moveBetweenLists = useBoundStore((state) => state.moveBetweenLists);
+  const moveCardToEnd = useBoundStore((state) => state.moveCardToEnd);
 
   const { boardId } = Route.useParams();
 
@@ -25,23 +29,57 @@ function Board() {
   useEffect(() => {
     return monitorForElements({
       onDrop({ source, location }) {
-        const destination = location.current.dropTargets[0];
-        if (!destination) return;
+        if (source.data?.type !== "card") return;
 
-        const sourceData = source.data;
-        const destinationData = destination.data;
+        const dropTargets = location.current.dropTargets;
+        if (!dropTargets.length) return;
 
-        if (sourceData?.type !== "card" || destinationData?.type !== "list") {
+        const { cardId, listId: sourceListId, order: startIndex } = source.data;
+
+        if (dropTargets.length === 2) {
+          const [destinationCard, destinationList] = dropTargets;
+
+          if (destinationCard.data?.type !== "card") return;
+
+          const destinationListId = destinationList.data.listId;
+          const indexOfTarget = destinationCard.data.order;
+
+          const closestEdge = extractClosestEdge(destinationCard.data);
+
+          const finishIndex = getReorderDestinationIndex({
+            startIndex: startIndex as number,
+            indexOfTarget: indexOfTarget as number,
+            closestEdgeOfTarget: closestEdge,
+            axis: "vertical",
+          });
+
+          if (sourceListId === destinationListId) {
+            reorderWithinList(
+              cardId as string,
+              sourceListId as string,
+              finishIndex,
+            );
+          } else {
+            moveBetweenLists(
+              cardId as string,
+              sourceListId as string,
+              destinationListId as string,
+              finishIndex,
+            );
+          }
+
           return;
         }
 
-        const { cardId } = sourceData as { cardId: string };
-        const { listId } = destinationData as { listId: string };
+        if (dropTargets.length === 1) {
+          const [destinationList] = dropTargets;
+          const destinationListId = destinationList.data.listId;
 
-        moveCard(cardId, listId);
+          moveCardToEnd(cardId as string, destinationListId as string);
+        }
       },
     });
-  }, [moveCard]);
+  }, [reorderWithinList, moveBetweenLists, moveCardToEnd]);
 
   return (
     <div className="w-full h-[calc(100vh-4rem)] flex gap-8 pt-12 px-4 overflow-x-auto">
@@ -55,6 +93,7 @@ function Board() {
           >
             {cards
               .filter((card) => card.listId === list.listId)
+              .sort((a, b) => a.order - b.order)
               .map((cardFiltered) => {
                 return (
                   <Card
@@ -64,6 +103,7 @@ function Board() {
                     title={cardFiltered.title}
                     description={cardFiltered.description}
                     priority={cardFiltered.priority || "low"}
+                    order={cardFiltered.order}
                   />
                 );
               })}

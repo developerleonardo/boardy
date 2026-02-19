@@ -16,6 +16,7 @@ export interface cardTypes {
   title: string;
   description: string;
   priority?: priorityType;
+  order: number;
 }
 
 export type priorityType = "low" | "medium" | "high";

@@ -48,7 +48,7 @@ export const List = ({ listId, title = "New List", children }: listProps) => {
     <>
       <div
         ref={ref}
-        className={`bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit ${isDraggedOver ? "bg-sky-500/30" : "bg-neutral-800"}`}
+        className={`bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit ${isDraggedOver ? "bg-neutral-900" : "bg-neutral-800"}`}
       >
         <div className="flex justify-between items-center w-full">
           <input
