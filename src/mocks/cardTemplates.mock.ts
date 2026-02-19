@@ -8,6 +8,7 @@ export const cardMocks: cardTypes[] = [
     description:
       "This is a description preview. For more details go to edit mode",
     priority: "low",
+    order: 0,
   },
   {
     listId: "list-1",
@@ -16,6 +17,7 @@ export const cardMocks: cardTypes[] = [
     description:
       "This is a description preview. For more details go to edit mode",
     priority: "medium",
+    order: 1,
   },
   {
     listId: "list-1",
@@ -24,5 +26,6 @@ export const cardMocks: cardTypes[] = [
     description:
       "This is a description preview. For more details go to edit mode",
     priority: "high",
+    order: 2,
   },
 ];
