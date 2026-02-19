@@ -1,6 +1,8 @@
 import { Badge } from "./ui/badge";
 import { type cardTypes } from "@/types";
 import { useBoundStore } from "@/stores";
+import { useEffect, useRef, useState } from "react";
+import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 
 type cardProps = cardTypes;
 
@@ -8,6 +10,7 @@ export const Card: React.FC<cardProps> = ({
   title,
   description,
   priority,
+  listId,
   cardId,
 }: cardProps) => {
   const setActiveCardId = useBoundStore((state) => state.setActiveCardId);
@@ -16,15 +19,34 @@ export const Card: React.FC<cardProps> = ({
     badgeVariant = priority;
   }
   const setIsEditingCard = useBoundStore((state) => state.setIsEditingCard);
+  const [dragging, setDragging] = useState<boolean>(false);
 
   const handleCardClick = () => {
     setActiveCardId(cardId);
     setIsEditingCard(true);
   };
 
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    return draggable({
+      element: el,
+      getInitialData: () => ({
+        type: "card",
+        cardId,
+        listId,
+      }),
+      onDragStart: () => setDragging(true),
+      onDrop: () => setDragging(false),
+    });
+  }, [cardId, listId]);
+
   return (
     <div
-      className="bg-neutral-700 h-44 rounded-lg px-6 py-4 w-full max-w-70 grid grid-rows-[1fr_2fr_22px] hover:bg-neutral-600 cursor-pointer"
+      ref={ref}
+      className={`bg-neutral-700 h-44 rounded-lg px-6 py-4 w-full max-w-70 grid grid-rows-[1fr_2fr_22px] hover:bg-neutral-600 cursor-pointer ${dragging ? "opacity-50" : ""}`}
       onClick={handleCardClick}
     >
       <h1 className="text-2xl font-bold">{title}</h1>

@@ -11,6 +11,7 @@ export interface CardsSlice {
   setIsEditingCard: (isEditing: boolean) => void;
   activeCardId?: string | undefined;
   setActiveCardId: (cardId: string | undefined) => void;
+  moveCard: (cardId: string, newListId: string) => void;
 }
 
 export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
@@ -46,4 +47,10 @@ export const createCardsSlice: StateCreator<CardsSlice> = (set) => ({
       cards: state.cards.filter((card) => card.cardId !== cardId),
     })),
   setActiveCardId: (cardId) => set({ activeCardId: cardId }),
+  moveCard: (cardId: string, newListId: string) =>
+    set((state) => ({
+      cards: state.cards.map((card) =>
+        card.cardId === cardId ? { ...card, listId: newListId } : card,
+      ),
+    })),
 });
