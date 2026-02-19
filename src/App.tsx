@@ -1,41 +1,13 @@
-import { Layout } from "./components/Layout";
-import { BoardSidebar } from "./components/BoardSidebar";
-import { Header } from "./components/Header";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
 import "./App.css";
-import { ActiveBoard } from "./components/ActiveBoard";
-import { EditCardDialog } from "./components/EditCardDialog";
-import { useBoundStore } from "./stores";
-import { SearchDialog } from "./components/SearchDialog";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
+
+const router = createRouter({ routeTree });
 
 function App() {
-  const boards = useBoundStore((state) => state.boards);
-  const selectedBoardId = useBoundStore((state) => state.activeBoardId);
-
-  const activeBoard = boards.find((board) => board.boardId === selectedBoardId);
-
   return (
     <>
-      <Layout>
-        <Header title={activeBoard?.title || "My First Board"} />
-        <SidebarProvider>
-          <BoardSidebar />
-          <SidebarTrigger />
-          <SidebarInset>
-            <ActiveBoard
-              userId={activeBoard?.userId || "local-user"}
-              boardId={activeBoard?.boardId || "1"}
-              title={activeBoard?.title || "My First Board"}
-            />
-          </SidebarInset>
-        </SidebarProvider>
-        <EditCardDialog />
-        <SearchDialog />
-      </Layout>
+      <RouterProvider router={router} />;
     </>
   );
 }

@@ -12,6 +12,7 @@ import { AlertDialogDestructive } from "@/components/AlertDialog";
 import { useBoundStore } from "@/stores";
 import { useState } from "react";
 import { EditBoardDialog } from "./EditBoardDialog";
+import { Link } from "@tanstack/react-router";
 
 interface SearchDialogOptionProps {
   title: string;
@@ -42,9 +43,9 @@ export const SearchDialogOption = ({
   return (
     <>
       <div className="flex items-center justify-between w-full dark:hover:bg-accent/50">
-        <a href={`/board/${boardId}`} className="flex-1 text-left px-2 py-1">
+        <Link to={`/board/${boardId}`} className="flex-1 text-left px-2 py-1">
           {title}
-        </a>
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">

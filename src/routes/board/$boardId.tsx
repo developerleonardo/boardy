@@ -3,17 +3,19 @@ import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import { Card } from "@/components/Card";
 import { List } from "@/components/List";
+import { createFileRoute } from "@tanstack/react-router";
 
-type ActiveBoardProps = {
-  userId: string;
-  boardId: string;
-  title: string;
-};
+export const Route = createFileRoute("/board/$boardId")({
+  loader: ({ params }) => params.boardId,
+  component: Board,
+});
 
-export const ActiveBoard = ({ boardId }: ActiveBoardProps) => {
+function Board() {
   const cards = useBoundStore((state) => state.cards);
   const lists = useBoundStore((state) => state.lists);
   const addList = useBoundStore((state) => state.addList);
+
+  const { boardId } = Route.useParams();
 
   const filteredLists = lists.filter((list) => list.boardId === boardId);
 
@@ -55,4 +57,4 @@ export const ActiveBoard = ({ boardId }: ActiveBoardProps) => {
       </Button>
     </div>
   );
-};
+}

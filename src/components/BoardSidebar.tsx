@@ -69,14 +69,6 @@ export const BoardSidebar = () => {
                 title={board.title}
                 boardId={board.boardId}
               />
-              // <Button
-              //   variant="ghost"
-              //   className="w-full flex justify-start"
-              //   key={board.boardId}
-              //   onClick={() => handleSelectBoard(board.boardId)}
-              // >
-              //   {board.title}
-              // </Button>
             ))}
           </SidebarGroupContent>
         </SidebarGroup>
