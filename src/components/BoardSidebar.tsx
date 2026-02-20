@@ -35,7 +35,7 @@ export const BoardSidebar = () => {
     <Sidebar side="left">
       <SidebarHeader>
         <div className="flex gap-2 items-center px-3 py-2">
-          <img src="./favicon.svg" alt="logo" className="w-4 h-4" />
+          <img src="/favicon.svg" alt="logo" className="w-4 h-4" />
           <h2 className="font-bold">Boardy</h2>
         </div>
       </SidebarHeader>
