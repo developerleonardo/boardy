@@ -4,20 +4,28 @@ import { CirclePlus, GripVertical, Trash } from "lucide-react";
 import { AlertDialogDestructive } from "./AlertDialog";
 import { useEffect, useRef, useState } from "react";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+
+import { attachClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
 
 type listProps = {
   boardId: string;
   listId: string;
   title: string;
   children?: React.ReactNode;
+  order: number;
 };
 
-export const List = ({ listId, title = "New List", children }: listProps) => {
-  const [isDialogActive, setIsDialogActive] = useState<boolean>(false);
-
+export const List = ({
+  listId,
+  title = "New List",
+  children,
+  order,
+}: listProps) => {
   const updateListTitle = useBoundStore((state) => state.updateListTitle);
   const deleteList = useBoundStore((state) => state.deleteList);
   const addCard = useBoundStore((state) => state.addCard);
+  const [isDialogActive, setIsDialogActive] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
 
@@ -25,17 +33,40 @@ export const List = ({ listId, title = "New List", children }: listProps) => {
     const el = ref.current;
     if (!el) return;
 
+    return draggable({
+      element: el,
+      getInitialData: () => ({
+        type: "list",
+        listId,
+        order,
+      }),
+    });
+  }, [listId, order]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
     return dropTargetForElements({
       element: el,
-      getData: () => ({
-        listId,
-        type: "list",
-      }),
+      getData: ({ input, element }) =>
+        attachClosestEdge(
+          {
+            type: "list",
+            listId,
+            order,
+          },
+          {
+            input,
+            element,
+            allowedEdges: ["left", "right"],
+          },
+        ),
       onDragEnter: () => setIsDraggedOver(true),
       onDragLeave: () => setIsDraggedOver(false),
       onDrop: () => setIsDraggedOver(false),
     });
-  }, [listId]);
+  }, [listId, order]);
 
   const openAlertDialog = () => {
     setIsDialogActive(true);

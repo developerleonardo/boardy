@@ -17,6 +17,7 @@ export const Route = createFileRoute("/board/$boardId")({
 function Board() {
   const cards = useBoundStore((state) => state.cards);
   const lists = useBoundStore((state) => state.lists);
+  const reorderLists = useBoundStore((state) => state.reorderLists);
   const addList = useBoundStore((state) => state.addList);
   const reorderWithinList = useBoundStore((state) => state.reorderWithinList);
   const moveBetweenLists = useBoundStore((state) => state.moveBetweenLists);
@@ -29,12 +30,52 @@ function Board() {
   useEffect(() => {
     return monitorForElements({
       onDrop({ source, location }) {
-        if (source.data?.type !== "card") return;
-
         const dropTargets = location.current.dropTargets;
         if (!dropTargets.length) return;
 
-        const { cardId, listId: sourceListId, order: startIndex } = source.data;
+        if (source.data?.type === "list") {
+          const destination = dropTargets[0];
+          if (destination.data?.type !== "list") return;
+
+          const orderedLists = lists
+            .filter((l) => l.boardId === boardId)
+            .sort((a, b) => a.order - b.order);
+
+          const startIndex = orderedLists.findIndex(
+            (l) => l.listId === source.data.listId,
+          );
+
+          const indexOfTarget = orderedLists.findIndex(
+            (l) => l.listId === destination.data.listId,
+          );
+
+          if (startIndex === -1 || indexOfTarget === -1) return;
+
+          const closestEdge = extractClosestEdge(destination.data);
+
+          let finishIndex = getReorderDestinationIndex({
+            startIndex,
+            indexOfTarget,
+            closestEdgeOfTarget: closestEdge,
+            axis: "horizontal",
+          });
+          if (startIndex > indexOfTarget && closestEdge === "right") {
+            finishIndex = indexOfTarget;
+          }
+
+          reorderLists(startIndex, finishIndex);
+          return;
+        }
+
+        if (source.data?.type !== "card") return;
+
+        const { cardId, listId: sourceListId } = source.data;
+
+        const orderedCards = cards
+          .filter((c) => c.listId === sourceListId)
+          .sort((a, b) => a.order - b.order);
+
+        const startIndex = orderedCards.findIndex((c) => c.cardId === cardId);
 
         if (dropTargets.length === 2) {
           const [destinationCard, destinationList] = dropTargets;
@@ -42,13 +83,22 @@ function Board() {
           if (destinationCard.data?.type !== "card") return;
 
           const destinationListId = destinationList.data.listId;
-          const indexOfTarget = destinationCard.data.order;
+
+          const destinationCards = cards
+            .filter((c) => c.listId === destinationListId)
+            .sort((a, b) => a.order - b.order);
+
+          const indexOfTarget = destinationCards.findIndex(
+            (c) => c.cardId === destinationCard.data.cardId,
+          );
+
+          if (startIndex === -1 || indexOfTarget === -1) return;
 
           const closestEdge = extractClosestEdge(destinationCard.data);
 
           const finishIndex = getReorderDestinationIndex({
-            startIndex: startIndex as number,
-            indexOfTarget: indexOfTarget as number,
+            startIndex,
+            indexOfTarget,
             closestEdgeOfTarget: closestEdge,
             axis: "vertical",
           });
@@ -73,43 +123,56 @@ function Board() {
 
         if (dropTargets.length === 1) {
           const [destinationList] = dropTargets;
-          const destinationListId = destinationList.data.listId;
+          if (destinationList.data?.type !== "list") return;
 
-          moveCardToEnd(cardId as string, destinationListId as string);
+          moveCardToEnd(
+            cardId as string,
+            destinationList.data.listId as string,
+          );
         }
       },
     });
-  }, [reorderWithinList, moveBetweenLists, moveCardToEnd]);
-
+  }, [
+    lists,
+    cards,
+    boardId,
+    reorderLists,
+    reorderWithinList,
+    moveBetweenLists,
+    moveCardToEnd,
+  ]);
   return (
     <div className="w-full h-[calc(100vh-4rem)] flex gap-8 pt-12 px-4 overflow-x-auto">
-      {filteredLists.map((list) => {
-        return (
-          <List
-            key={list.listId}
-            listId={list.listId}
-            boardId={list.boardId}
-            title={list.title}
-          >
-            {cards
-              .filter((card) => card.listId === list.listId)
-              .sort((a, b) => a.order - b.order)
-              .map((cardFiltered) => {
-                return (
-                  <Card
-                    key={cardFiltered.cardId}
-                    listId={cardFiltered.listId}
-                    cardId={cardFiltered.cardId}
-                    title={cardFiltered.title}
-                    description={cardFiltered.description}
-                    priority={cardFiltered.priority || "low"}
-                    order={cardFiltered.order}
-                  />
-                );
-              })}
-          </List>
-        );
-      })}
+      {filteredLists
+        .sort((a, b) => a.order - b.order)
+        .map((list) => {
+          return (
+            <List
+              key={list.listId}
+              listId={list.listId}
+              boardId={list.boardId}
+              title={list.title}
+              order={list.order}
+            >
+              {cards
+                .filter((card) => card.listId === list.listId)
+                .sort((a, b) => a.order - b.order)
+                .map((cardFiltered) => {
+                  return (
+                    <Card
+                      key={cardFiltered.cardId}
+                      listId={cardFiltered.listId}
+                      cardId={cardFiltered.cardId}
+                      title={cardFiltered.title}
+                      description={cardFiltered.description}
+                      priority={cardFiltered.priority || "low"}
+                      order={cardFiltered.order}
+                    />
+                  );
+                })}
+            </List>
+          );
+        })}
 
       <Button
         variant="secondary"

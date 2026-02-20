@@ -25,4 +25,5 @@ export interface listTypes {
   boardId: string;
   listId: string;
   title: string;
+  order: number;
 }
