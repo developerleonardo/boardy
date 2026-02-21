@@ -7,23 +7,35 @@ import {
   SidebarTrigger,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { useBoundStore } from "@/stores/bound/bound.store";
 
 export const Route = createRootRoute({
+  loader: () => {
+    const store = useBoundStore.getState();
+    if (!store.hasInitialized && store.boards.length === 0) {
+      store.initializeIfNeeded();
+
+      throw redirect({
+        to: "/board/$boardId",
+        params: { boardId: "1" },
+      });
+    }
+    return null;
+  },
   component: () => {
     const boards = useBoundStore((state) => state.boards);
-    const selectedBoardId = useBoundStore((state) => state.activeBoardId);
-
-    const activeBoard = boards.find(
-      (board) => board.boardId === selectedBoardId,
-    );
+    const activeBoardId = useBoundStore((state) => state.activeBoardId);
+    let headerTitle =
+      boards.length === 0
+        ? ""
+        : ` ${boards.find((b) => b.boardId === activeBoardId)?.title || ""}`;
     return (
       <>
         <Layout>
-          <Header title={activeBoard?.title || "My first Board"} />
+          <Header title={headerTitle} />
           <SidebarProvider>
             <BoardSidebar />
             <SidebarTrigger />

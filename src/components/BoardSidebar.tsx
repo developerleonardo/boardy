@@ -12,6 +12,7 @@ import { Search, SquarePen } from "lucide-react";
 import { useBoundStore } from "@/stores";
 import { v4 as uuid } from "uuid";
 import { SearchDialogOption } from "./SearchDialogOption";
+import { useNavigate } from "@tanstack/react-router";
 
 export const BoardSidebar = () => {
   const boards = useBoundStore((state) => state.boards);
@@ -20,6 +21,7 @@ export const BoardSidebar = () => {
   const setIsSearchDialogOpen = useBoundStore(
     (state) => state.setIsSearchDialogOpen,
   );
+  const navigate = useNavigate();
 
   const handleAddBoard = () => {
     const newBoard = {
@@ -28,6 +30,10 @@ export const BoardSidebar = () => {
       title: `New Board`,
     };
     addBoard(newBoard);
+    navigate({
+      to: "/board/$boardId",
+      params: { boardId: newBoard.boardId },
+    });
     setActiveBoardId(newBoard.boardId);
   };
 

@@ -12,7 +12,7 @@ import { AlertDialogDestructive } from "@/components/AlertDialog";
 import { useBoundStore } from "@/stores";
 import { useState } from "react";
 import { EditBoardDialog } from "./EditBoardDialog";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 interface SearchDialogOptionProps {
   title: string;
@@ -29,6 +29,7 @@ export const SearchDialogOption = ({
   );
   const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
   const [isEditingBoard, setIsEditingBoard] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpenDeleteDialog = () => {
     setIsAlertDialogOpen(true);
@@ -39,6 +40,9 @@ export const SearchDialogOption = ({
     deleteBoard(boardId);
     setIsAlertDialogOpen(false);
     setIsSearchDialogOpen(false);
+    if (window.location.pathname === `/board/${boardId}`) {
+      navigate({ to: "/" });
+    }
   };
   return (
     <>
