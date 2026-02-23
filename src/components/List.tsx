@@ -79,7 +79,7 @@ export const List = ({
     <>
       <div
         ref={ref}
-        className={`bg-neutral-800 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit ${isDraggedOver ? "bg-neutral-900" : "bg-neutral-800"}`}
+        className={`bg-neutral-800 max-h-158 rounded-md flex flex-col gap-3 w-76 p-4 items-center h-fit ${isDraggedOver ? "bg-neutral-900" : "bg-neutral-800"}`}
       >
         <div className="flex justify-between items-center w-full">
           <input
@@ -91,7 +91,9 @@ export const List = ({
           <Trash className="cursor-pointer w-5 h-5" onClick={openAlertDialog} />
           <GripVertical className="cursor-grab w-5 h-5" />
         </div>
-        <div className="flex flex-col gap-2 w-full">{children}</div>
+        <div className="flex flex-col gap-2 w-full overflow-auto">
+          {children}
+        </div>
         <Button
           variant="secondary"
           className="w-full hover:bg-neutral-900/50"
