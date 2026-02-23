@@ -142,7 +142,7 @@ function Board() {
     moveCardToEnd,
   ]);
   return (
-    <div className="w-full h-[calc(100vh-4rem)] flex gap-8 pt-12 px-4 overflow-x-auto">
+    <div className="w-full h-[calc(100vh-4rem)] flex gap-8 pt-12 px-12 overflow-x-auto">
       {filteredLists
         .sort((a, b) => a.order - b.order)
         .map((list) => {

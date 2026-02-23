@@ -35,11 +35,10 @@ export const Route = createRootRoute({
     return (
       <>
         <Layout>
-          <Header title={headerTitle} />
           <SidebarProvider>
             <BoardSidebar />
-            <SidebarTrigger />
             <SidebarInset>
+              <Header title={headerTitle} />
               <Outlet />
             </SidebarInset>
           </SidebarProvider>
