@@ -2,11 +2,7 @@ import { BoardSidebar } from "@/components/BoardSidebar";
 import { EditCardDialog } from "@/components/EditCardDialog";
 import { Header } from "@/components/Header";
 import { SearchDialog } from "@/components/SearchDialog";
-import {
-  SidebarProvider,
-  SidebarTrigger,
-  SidebarInset,
-} from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { createRootRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
