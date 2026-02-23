@@ -138,7 +138,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
                 />
               </Field>
             </FieldGroup>
-            <DialogFooter>
+            <DialogFooter className="mt-3">
               <Button
                 variant="destructive"
                 type="button"
@@ -147,7 +147,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
                 <Trash className="inline w-3 h-3" />
                 Delete
               </Button>
-              <div>
+              <div className="flex gap-2">
                 <DialogClose asChild>
                   <Button variant="outline">Cancel</Button>
                 </DialogClose>
