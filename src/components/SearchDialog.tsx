@@ -25,6 +25,10 @@ export function SearchDialog({}: SearchDialogProps) {
     board.title.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  const resetInput = () => {
+    setSearchTerm("");
+  };
+
   return (
     <>
       <Dialog open={isSearchDialogOpen} onOpenChange={setIsSearchDialogOpen}>
@@ -57,6 +61,7 @@ export function SearchDialog({}: SearchDialogProps) {
                   key={board.boardId}
                   title={board.title}
                   boardId={board.boardId}
+                  resetInput={resetInput}
                 />
               ))}
             </div>

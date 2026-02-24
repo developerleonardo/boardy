@@ -17,11 +17,13 @@ import { Link, useNavigate } from "@tanstack/react-router";
 interface SearchDialogOptionProps {
   title: string;
   boardId?: string;
+  resetInput?: () => void;
 }
 
 export const SearchDialogOption = ({
   title,
   boardId,
+  resetInput,
 }: SearchDialogOptionProps) => {
   const deleteBoard = useBoundStore((state) => state.deleteBoard);
   const setIsSearchDialogOpen = useBoundStore(
@@ -30,6 +32,11 @@ export const SearchDialogOption = ({
   const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
   const [isEditingBoard, setIsEditingBoard] = useState(false);
   const navigate = useNavigate();
+
+  const handleSelectOption = () => {
+    setIsSearchDialogOpen(false);
+    resetInput && resetInput();
+  };
 
   const handleOpenDeleteDialog = () => {
     setIsAlertDialogOpen(true);
@@ -47,7 +54,11 @@ export const SearchDialogOption = ({
   return (
     <>
       <div className="flex items-center justify-between w-full dark:hover:bg-accent/50">
-        <Link to={`/board/${boardId}`} className="flex-1 text-left px-2 py-1">
+        <Link
+          to={`/board/${boardId}`}
+          className="flex-1 text-left px-2 py-1"
+          onClick={handleSelectOption}
+        >
           {title}
         </Link>
         <DropdownMenu>
