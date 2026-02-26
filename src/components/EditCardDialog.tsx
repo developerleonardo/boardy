@@ -89,12 +89,12 @@ export function EditCardDialog({}: EditCardDialogProps) {
                 <Input
                   id="title"
                   defaultValue={activeCard.title || ""}
-                  {...register("title", { maxLength: 25 })}
+                  {...register("title", { maxLength: 16 })}
                 />
                 {errors.title && (
                   <p className="text-red-300 text-sm mt-1">
                     {errors.title.type === "maxLength" &&
-                      "Title cannot exceed 25 characters"}
+                      "Title cannot exceed 16 characters"}
                   </p>
                 )}
               </Field>
