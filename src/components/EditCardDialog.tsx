@@ -47,7 +47,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
+    values: {
       title: activeCard?.title || "",
       description: activeCard?.description || "",
       priority: activeCard?.priority || "low",
@@ -71,11 +71,9 @@ export function EditCardDialog({}: EditCardDialogProps) {
     setIsEditingCard(false);
   });
 
-  const handleCloseModal = (open: boolean) => {
-    if (!open) {
-      reset();
-    }
-    setIsEditingCard(open);
+  const handleCloseModal = () => {
+    reset();
+    setIsEditingCard(false);
   };
 
   return (
