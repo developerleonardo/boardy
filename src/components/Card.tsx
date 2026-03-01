@@ -70,7 +70,7 @@ export const Card: React.FC<cardProps> = ({
       onClick={handleCardClick}
     >
       <h1 className="text-2xl font-bold">{title}</h1>
-      <p className="text-base">{description}</p>
+      <p className="text-base overflow-y-hidden max-w-56">{description}</p>
       <Badge variant={badgeVariant}>{priority}</Badge>
     </div>
   );

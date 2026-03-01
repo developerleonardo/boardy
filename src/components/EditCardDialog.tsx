@@ -47,7 +47,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
     reset,
     formState: { errors },
   } = useForm({
-    values: {
+    defaultValues: {
       title: activeCard?.title || "",
       description: activeCard?.description || "",
       priority: activeCard?.priority || "low",
@@ -71,9 +71,16 @@ export function EditCardDialog({}: EditCardDialogProps) {
     setIsEditingCard(false);
   });
 
+  const handleCloseModal = (open: boolean) => {
+    if (!open) {
+      reset();
+    }
+    setIsEditingCard(open);
+  };
+
   return (
     <>
-      <Dialog open={isEditingCard} onOpenChange={setIsEditingCard}>
+      <Dialog open={isEditingCard} onOpenChange={handleCloseModal}>
         <DialogContent className="sm:max-w-sm">
           <form className="flex flex-col gap-4" onSubmit={onSubmit}>
             <DialogHeader>
@@ -86,11 +93,7 @@ export function EditCardDialog({}: EditCardDialogProps) {
             <FieldGroup>
               <Field>
                 <Label htmlFor="title">Title</Label>
-                <Input
-                  id="title"
-                  defaultValue={activeCard.title || ""}
-                  {...register("title", { maxLength: 16 })}
-                />
+                <Input id="title" {...register("title", { maxLength: 16 })} />
                 {errors.title && (
                   <p className="text-red-300 text-sm mt-1">
                     {errors.title.type === "maxLength" &&
@@ -102,8 +105,8 @@ export function EditCardDialog({}: EditCardDialogProps) {
                 <Label htmlFor="description">Description</Label>
                 <Textarea
                   id="description"
+                  className="max-h-37"
                   placeholder="Type your message here."
-                  defaultValue={activeCard.description || ""}
                   {...register("description", { maxLength: 500 })}
                 />
                 {errors.description && (
@@ -119,7 +122,6 @@ export function EditCardDialog({}: EditCardDialogProps) {
                 <Controller
                   name="priority"
                   control={control}
-                  defaultValue={activeCard.priority}
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-full">
